@@ -3,4 +3,4 @@ from app.settings import DevConfig
 
 app = create_app(DevConfig)
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
