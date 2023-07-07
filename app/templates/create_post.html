@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Create Post{% endblock %}
+
+{% block body %}
+
+    <form method="post">
+        {{ form.csrf_token }}
+        <div class="mb-3">
+            {{ form.content.label(class_="form-label") }}
+            {{ form.content(class_="form-control") }}
+            {% if form.content.errors %}
+                {% for e in form.content.errors %}
+                    <p class="form-text">{{ e }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+       
+        {{ form.create(class="btn btn-primary")}}
+    </form>
+{% endblock %}

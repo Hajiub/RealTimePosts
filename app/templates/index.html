@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<style>
+    .post-container {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .post-container .user-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .post-container .content {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .post-container .posted-at {
+        font-size: 14px;
+        color: #777;
+    }
+</style>
+
+<div class="container">
+    <h1>RealTime Posts Using Polling</h1>
+    <div id="post-list"></div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        function fetchRealTimePosts() {
+            $.ajax({
+                url: '/realtime',
+                type: 'POST',
+                success: function(data) {
+                    updatePostList(data);
+                },
+                complete: function() {
+                    setTimeout(fetchRealTimePosts, 2000); // Poll every 2 seconds in other words call the fetch function every 2 secs
+                }
+            });
+        }
+
+        function updatePostList(posts) {
+            $('#post-list').empty();
+            for (var i = 0; i < posts.length; i++) {
+                var post = posts[i];
+                var postContainer = $('<div>').addClass('post-container');
+                var userName = $('<div>').addClass('user-name').text(post.user_name);
+                var content = $('<div>').addClass('content').text(post.content);
+                var postedAt = $('<div>').addClass('posted-at').text('Posted At: ' + post.created_at);
+                postContainer.append(userName, content, postedAt);
+                $('#post-list').append(postContainer);
+            }
+        }
+
+        fetchRealTimePosts();
+    });
+</script>
+{% endblock %}

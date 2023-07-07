@@ -1,0 +1,4 @@
+instance
+migrations
+.pytest_cache
+.venv

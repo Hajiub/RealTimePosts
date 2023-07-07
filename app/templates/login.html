@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Flask Login Example{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-5">Flask Login Example</h1>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form role="form" action="{{ url_for('.login') }}" method="post">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.username.label(class_="form-label") }}
+                    {{ form.username(class_="form-control") }}
+                    {% if form.username.errors %}
+                        {% for e in form.username.errors %}
+                            <p class="form-text">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form.password.label(class_="form-label") }}
+                    {{ form.password(class_="form-control") }}
+                    {% if form.password.errors %}
+                        {% for e in form.password.errors %}
+                            <p class="form-text">{{ e }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+{% endblock %}
